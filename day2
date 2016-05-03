@@ -1,0 +1,51 @@
+栈
+一种后进先出(LIFO)原则的有序集合
+	function Stack(){
+		//各种属性和方法的声明
+		var items = [];
+		//添加新元素到栈顶
+		this.push = function(element){
+			items.push(element);
+		}
+		//移除栈顶元素，同时返回该元素
+		this.pop = function(element){
+			return items.pop();
+		}
+		//返回栈顶元素，不做任何修改
+		this.peek = function(){
+			return items[items.length-1];
+		}
+		//判断栈是否为空
+		this.isEmpty = function(){
+			return items.length == 0;
+		}
+		//返回栈的长度
+		this.size = function(){
+			return items.length;
+		}
+		//移除栈内所有元素
+		this.clear = function(){
+			items = [];
+		}
+		
+		//检查栈内元素
+		this.print = function(){
+			console.log(items.toString());
+		}
+	}
+
+十进制转换二进制
+	function divideBy2(decNumber){
+		var remStack = new Stack(),
+			rem,
+			binaryString;
+		while(decNumber > 0){
+			rem = Math.floor(decNumber % 2);
+			remStack.push(rem);
+			decNumber = Math.floor(decNumber / 2);
+		}
+		while(!remStack.isEmpty()){
+			binaryString += remStack.pop().toString();
+		}
+		return binaryString;
+	}
