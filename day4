@@ -1,0 +1,116 @@
+链表
+链表的元素在内存中不是连续存放的
+想访问链表中间的一个元素，需要从起点开始迭代列表直到找到所需元素
+例子：火车
+function LinkedList(){
+	var Node = function(element){
+		this.element = element;
+		this.next = null;
+	};
+	
+	var length = 0;
+	var head = null;
+	
+	//列表尾部添加新元素
+	this.append = function(element){
+		var node = new Node(element),
+			current;
+		if(head === null){
+			head = node;
+		}else{
+			current = head;
+			//循环链表，直到找到最后一项
+			while(current.next){
+				current = current.next;
+			}
+			
+			current.next = node;
+		}
+		length++;
+	};
+	//特定位置插入元素
+	this.insert = function(position,element){
+		//检查越界值
+		if(position>-1 && position<length){
+			var node = new Node(element),
+				current = head,
+				previous,
+				index = 0;
+			if(position === 0){
+				node.next = current;
+				head = node;
+			}else{
+				while(index++ < position){
+					previous = current;
+					current = current.next;
+				}
+				node.next = current;
+				previous.next = node;
+			}
+			length++;
+			return true;
+		}else{
+			return false;
+		}
+	};
+	//特定位置移除
+	this.removeAt = function(position){
+		//检查越界值
+		if(position>-1 && position<length){
+			var current = head,
+				previous,
+				index = 0;
+			if(position === 0){
+				head = current.next;
+			}else{
+				while(index++ < position){
+					previous = current;
+					current = current.next;
+				}
+				previous.next = current.next;	//将previous与current下一项连接起来，跳过current从而移除它
+			}
+			length--;
+			return current.element;
+		}else{
+			return null;
+		}
+	};
+	//列表中移除一项
+	this.remove = function(element){
+		var index = this.indexOf(element);	//代码重用
+		return this.removeAt(index);
+	};
+	//返回元素在列表中的索引
+	this.indexOf = function(element){
+		var current = head,
+			index = 0;	//书中是-1，我认为是0
+		while(current){
+			if(element === current.element){
+				return index;
+			}
+			index++;
+			current = current.next;
+		}
+		return -1;
+	};
+	//判断是否为空
+	this.isEmpty = function(){
+		return length === 0;
+	};
+	//链表包含元素个数
+	this.size = function(){
+		return length;
+	};
+	//只输出元素值
+	this.toString = function(){
+		var current = head,
+			string = '';
+		while(current){
+			string += current.element;	//书中是等于，我认为应该是加等，因为要拼接
+			current = current.next;
+		}
+	};
+	this.getHead = function(){
+		return head;
+	};
+}
