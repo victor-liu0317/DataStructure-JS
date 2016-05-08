@@ -1,0 +1,36 @@
+字典
+与集合相似，集合以[值，值]形式存储元素，字典以[键，值]存储元素，也称作映射
+function Dictionary(){
+	var items = {};
+	//判断是否存在
+	this.has = function(key){
+		return key in items;
+	};
+	//添加新元素
+	this.set = function(key,value){
+		items[key] = value;
+	};
+	//移除元素
+	this.remove = function(key){
+		if(this.has(key)){
+			delete items[key];
+			return true;
+		}
+		return false;
+	};
+	//查找特定的项，并检索它的值
+	this.get = function(key){
+		return this.has(key) ? items[key] : undefined;
+	};
+	//以数组形式返回字典中所有values实例的值
+	this.values = function(){
+		var values = [];	//书中是{},但我认为是[],表示数组
+		for(var k in items){
+			if(this.has(k)){
+				values.push(items[k]);
+			}
+		}
+		return values;
+	};
+	//clear、size、keys方法与Set中完全一样
+}
