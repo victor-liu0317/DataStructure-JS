@@ -1,0 +1,43 @@
+散列表
+HashTable类,也叫HashMap类，是Dictionary类的一种散列表实现方式
+function HashTable(){
+	var table = [];
+  	//实现一个散列函数，这里实现最常用的"lose lose"，将键值中的每个字母的ASCII值相加
+  	var loseloseHashCode = function(key){
+  		var hash = 0;
+  		for(var i=0;i<key.length;i++){
+  			hash += key.charCodeAt(i);
+  		}
+  		return hash % 37;	//为了得到较小数值，使用hash值和一个任意数做除法的余数
+  	};
+  	//添加新元素
+  	this.put = function(key,value){
+  		var position = loseloseHashCode(key);
+  		table[position] = value;
+  	};
+  	//查找
+  	this.get = function(key){
+  		return table[loseloseHashCode(key)];
+  	};
+  	//移除元素
+  	this.remove = function(key){
+  		table[loseloseHashCode(key)] = undefined;
+  	};
+}
+
+处理散列表冲突：
+1.分离链接
+	为散列表每个位置创建一个链表并将元素存储在里面
+2.线性探查
+	如果索引为index的位置被占据，就尝试index+1的位置，若也被占用就用index+2的位置
+3.双散列法
+
+
+一个更好的散列函数
+var djb2HashCode = function(key){
+	var hash = 5381;
+	for(var i=0;i<key.length;i++){
+		hash = hash * 33 + key.charCodeAt(i);
+	}
+	return hash % 1013;
+};
