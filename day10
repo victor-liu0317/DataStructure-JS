@@ -1,0 +1,35 @@
+图
+一个图G=(V,E)
+	V:一组顶点
+	E:一组边，连接V中的顶点
+function Graph(){
+	var vertices = [];
+	var adjList = new Dictionary();
+	//添加一个新的点
+	this.addVertex = function(v){
+		vertices.push(v);
+		adjList.set(v,[]);
+	};
+	//添加顶点的边
+	this.addEdge = function(v,w){
+		adjList.get(v).push(w);
+		adjList.get(w).push(v);
+	};
+	//输出邻接表
+	this.toString = function(){
+		var s = '';
+		for(var i=0;i<vertices.length;i++){
+			s += vertices[i] + '->';
+			var neighbors = adjList.get(vertices[i]);
+			for(var j=0;j<neighbors.length;j++){
+				s += neighbors[j] + '';
+			}
+			s += '\n';
+		}
+		return s;
+	};
+}
+
+对图的遍历：
+	广度优先搜索(Breadth-First Search,BFS)
+	深度优先搜索(Depth-First Search,DFS)
